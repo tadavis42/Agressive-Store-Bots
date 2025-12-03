@@ -5,21 +5,44 @@
 
 ---
 
-## 🎯 QUICK START (2025 MTG Bots)
+## 🎯 QUICK START (Hard-to-Find MTG Collector Items)
 
 ### Current Bots (December 2025):
-1. **aetherdrift-collector-chrome-bot.py** - Preorder monitoring (Feb 2025 release)
-2. **foundations-collector-chrome-bot.py** - Core set with long print run
-3. **bloomburrow-collector-chrome-bot.py** - Popular summer 2024 set
+These bots monitor **ultra-limited collector products that sell out in minutes**:
 
-### Running a Bot:
-```cmd
-cd "C:\Users\client1\Dropbox\CardTracker\Agressive-Store-Bots"
-py aetherdrift-collector-chrome-bot.py
+1. **tmnt-collector-chrome-bot.py** - TMNT Collector Booster Box 🔥 **PRIORITY**
+   - **Why:** Sold out in 5 minutes on preorder, reselling for $1000 (MSRP $456)
+   - **ASIN:** B0FR6HHZKB
+   - **Release:** March 2026 - monitoring for restocks
+
+2. **final-fantasy-chrome-bot.py** - Final Fantasy Chocobo Bundle (Wave 2)
+   - **Why:** Sold out same day preorders opened (December 5, 2025)
+   - **ASIN:** B0FP6H8J6Q
+   - **Status:** Rare restocks, sells out within minutes
+
+3. **avatar-collector-chrome-bot.py** - Avatar: The Last Airbender Collector Box
+   - **Why:** Limited edition crossover, instant sellouts
+   - **ASIN:** B0FJNQ3DHX
+   - **Status:** Brief restock windows only
+
+4. **spider-man-chrome-bot.py** - Marvel's Spider-Man Bundle
+   - **ASIN:** B0DV1VCPQF
+   - **Status:** Limited availability
+
+### Running a Bot on tadbox (Linux):
+```bash
+cd /home/tadavis/bots/CardTracker/Agressive-Store-Bots
+source venv/bin/activate
+python3 tmnt-collector-chrome-bot.py
 ```
 
-**📋 Product List:** See [PRODUCT-TRACKING-LIST.md](PRODUCT-TRACKING-LIST.md) for detailed product information
-**🆕 Setup Guide:** See [NEW-PRODUCTS-2025.md](NEW-PRODUCTS-2025.md) for quick setup instructions
+### Running a Bot on Windows:
+```cmd
+cd "C:\Users\client1\Dropbox\CardTracker\Agressive-Store-Bots"
+py tmnt-collector-chrome-bot.py
+```
+
+**All bots are now Linux/Windows compatible** - they use platform-independent paths and work on tadbox!
 
 ---
 
