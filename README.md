@@ -5,29 +5,26 @@
 
 ---
 
-## 🎯 QUICK START (Hard-to-Find MTG Collector Items)
+## 🎯 QUICK START - TMNT Collector Booster Box Bot
 
-### Current Bots (December 2025):
-These bots monitor **ultra-limited collector products that sell out in minutes**:
+### Current Bot (December 2025):
+**tmnt-collector-chrome-bot.py** - TMNT Collector Booster Box 🔥 **ULTRA-HIGH PRIORITY**
 
-1. **tmnt-collector-chrome-bot.py** - TMNT Collector Booster Box 🔥 **PRIORITY**
-   - **Why:** Sold out in 5 minutes on preorder, reselling for $1000 (MSRP $456)
-   - **ASIN:** B0FR6HHZKB
-   - **Release:** March 2026 - monitoring for restocks
+**Why This Product?**
+- **Sold out in 5 minutes** on preorder (October 2025)
+- **Current resale value:** $1000 per box
+- **MSRP:** $456 per box
+- **Profit potential:** $544+ per box
+- **Release date:** March 6, 2026
+- **ASIN:** B0FR6HHZKB
 
-2. **final-fantasy-chrome-bot.py** - Final Fantasy Chocobo Bundle (Wave 2)
-   - **Why:** Sold out same day preorders opened (December 5, 2025)
-   - **ASIN:** B0FP6H8J6Q
-   - **Status:** Rare restocks, sells out within minutes
-
-3. **avatar-collector-chrome-bot.py** - Avatar: The Last Airbender Collector Box
-   - **Why:** Limited edition crossover, instant sellouts
-   - **ASIN:** B0FJNQ3DHX
-   - **Status:** Brief restock windows only
-
-4. **spider-man-chrome-bot.py** - Marvel's Spider-Man Bundle
-   - **ASIN:** B0DV1VCPQF
-   - **Status:** Limited availability
+**Product Details:**
+- 12 Collector Booster Packs
+- 15 foil cards per pack
+- Exclusive Kevin Eastman "Headliner" art cards
+- Magic: The Gathering x Teenage Mutant Ninja Turtles crossover
+- Preorders sold out in under 5 minutes
+- This is the ONLY product worth monitoring right now
 
 ### Running a Bot on tadbox (Linux):
 ```bash
