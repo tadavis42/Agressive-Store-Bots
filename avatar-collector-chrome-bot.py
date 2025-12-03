@@ -37,13 +37,14 @@ MAX_CHECKS_PER_HOUR = 250  # Limit to prevent Amazon blocking
 COOLDOWN_MINUTES = 10  # Cooldown period after errors
 HEADLESS = False
 
-# Chrome configuration
-CHROME_PATH = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
+# Chrome configuration - Linux/Windows compatible
+CHROME_PATH = None  # Let webdriver-manager handle it
 
 def create_chrome_driver():
     """Create Chrome driver for monitoring"""
     from selenium.webdriver.chrome.service import Service
     from webdriver_manager.chrome import ChromeDriverManager
+    import tempfile
 
     options = Options()
 
@@ -59,12 +60,15 @@ def create_chrome_driver():
     options.add_argument('--allow-running-insecure-content')
     options.add_argument('--disable-extensions')
 
-    # Use dedicated profile for this bot
-    options.add_argument('--user-data-dir=C:\\temp\\avatar_chrome_bot')
+    # Use dedicated profile for this bot - Platform independent
+    temp_dir = tempfile.gettempdir()
+    profile_dir = os.path.join(temp_dir, 'avatar_chrome_bot')
+    os.makedirs(profile_dir, exist_ok=True)
+    options.add_argument(f'--user-data-dir={profile_dir}')
     options.add_argument('--profile-directory=Default')
 
-    # User agent
-    options.add_argument('--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
+    # User agent - Linux compatible
+    options.add_argument('--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
 
     try:
         print("🔵 Starting Chrome for Avatar monitoring...")

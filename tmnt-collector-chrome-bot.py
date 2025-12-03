@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
-CHROME VERSION - Final Fantasy MTG Bot
-Monitors Magic: The Gathering Final Fantasy Chocobo Bundle
+CHROME VERSION - TMNT Collector Booster Box Bot
+Monitors Magic: The Gathering Teenage Mutant Ninja Turtles Collector Booster Box
+HIGH PRIORITY: Sold out in 5 minutes on preorder, reselling for $1000
 Based on improved Chrome bot architecture with rate limiting
 """
 
@@ -23,31 +24,30 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler('finalfantasy_bot.log'),
+        logging.FileHandler('tmnt_bot.log'),
         logging.StreamHandler()
     ]
 )
 
 # === CONFIGURATION ===
-PRODUCT_NAME = "Final Fantasy Chocobo Bundle"
-PRODUCT_URL = "https://www.amazon.com/Magic-Gathering-Fantasy-Chocobo-Boosters/dp/B0FP6H8J6Q"
-MAX_PRICE = 200  # Estimate for collector bundle
+PRODUCT_NAME = "TMNT Teenage Mutant Ninja Turtles Collector Booster Box"
+PRODUCT_URL = "https://www.amazon.com/Magic-Gathering-Teenage-Collector-Collectible/dp/B0FR6HHZKB"
+MAX_PRICE = 500  # MSRP ~$456, willing to pay slight premium for instant sellout
 TARGET_QUANTITY = 2  # Purchase quantity
-REFRESH_SECONDS = 8  # Faster monitoring for Final Fantasy collector item
-MAX_CHECKS_PER_HOUR = 400  # Higher limit for limited collector products
+REFRESH_SECONDS = 5  # FAST monitoring - this sells out in minutes
+MAX_CHECKS_PER_HOUR = 600  # Very high limit for ultra-limited collector products
 COOLDOWN_MINUTES = 15  # Longer cooldown to balance faster checks
-MIN_RANDOM_DELAY = 2  # Minimum additional random delay
-MAX_RANDOM_DELAY = 12  # Maximum additional random delay
+MIN_RANDOM_DELAY = 1  # Minimum additional random delay
+MAX_RANDOM_DELAY = 8  # Maximum additional random delay
 HEADLESS = False
 
 # Chrome configuration - Linux/Windows compatible
 CHROME_PATH = None  # Let webdriver-manager handle it
 
 def create_chrome_driver():
-    """Create Chrome driver for Final Fantasy monitoring"""
+    """Create Chrome driver for TMNT monitoring"""
     from selenium.webdriver.chrome.service import Service
     from webdriver_manager.chrome import ChromeDriverManager
-    import tempfile
 
     options = Options()
 
@@ -58,7 +58,7 @@ def create_chrome_driver():
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
     options.add_argument('--disable-gpu')
-    options.add_argument('--remote-debugging-port=9225')  # Unique port for FF bot
+    options.add_argument('--remote-debugging-port=9227')  # Unique port for TMNT bot
     options.add_argument('--disable-web-security')
     options.add_argument('--allow-running-insecure-content')
     options.add_argument('--disable-extensions')
@@ -70,9 +70,10 @@ def create_chrome_driver():
     options.add_argument('--disable-features=VizDisplayCompositor')
     options.add_argument('--ssl-version-fallback-min=tls1.2')
 
-    # Use dedicated profile for Final Fantasy bot - Platform independent
+    # Use dedicated profile for TMNT bot - Platform independent
+    import tempfile
     temp_dir = tempfile.gettempdir()
-    profile_dir = os.path.join(temp_dir, 'finalfantasy_chrome_bot')
+    profile_dir = os.path.join(temp_dir, 'tmnt_chrome_bot')
     os.makedirs(profile_dir, exist_ok=True)
     options.add_argument(f'--user-data-dir={profile_dir}')
     options.add_argument('--profile-directory=Default')
@@ -92,11 +93,11 @@ def create_chrome_driver():
     options.add_argument('--disable-logging')
     options.add_argument('--log-level=3')
 
-    # User agent - Linux compatible
+    # User agent
     options.add_argument('--user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36')
 
     try:
-        print("🔵 Starting Chrome for Final Fantasy monitoring...")
+        print("🐢 Starting Chrome for TMNT monitoring...")
         service = Service(ChromeDriverManager().install())
 
         # Set timeouts to handle connection issues
@@ -214,7 +215,7 @@ def handle_amazon_dialogs(driver):
         return False
 
 def check_amazon_availability(driver):
-    """Check if Final Fantasy Chocobo Bundle is available from Amazon Direct"""
+    """Check if TMNT Collector Booster Box is available from Amazon Direct"""
     try:
         print(f"🔍 Checking {PRODUCT_NAME} at {datetime.now().strftime('%H:%M:%S')}")
 
@@ -225,7 +226,7 @@ def check_amazon_availability(driver):
         print(f"🌐 Loading product page...")
 
         # Add small pre-navigation delay
-        time.sleep(random.uniform(0.5, 2.0))
+        time.sleep(random.uniform(0.5, 1.5))
 
         driver.get(PRODUCT_URL)
         print("✅ Page navigation completed")
@@ -236,7 +237,7 @@ def check_amazon_availability(driver):
         )
 
         # Simulate human-like page interaction
-        time.sleep(random.uniform(1.0, 3.0))
+        time.sleep(random.uniform(1.0, 2.5))
 
         # Occasionally scroll to simulate reading
         if random.random() < 0.3:  # 30% chance
@@ -346,33 +347,33 @@ def check_amazon_availability(driver):
         return None
 
 def attempt_purchase(driver):
-    """Attempt to add Final Fantasy Bundle to cart with specified quantity"""
+    """Attempt to add TMNT Collector Box to cart with specified quantity"""
     try:
-        print(f"🛒 ATTEMPTING TO ADD {TARGET_QUANTITY} FINAL FANTASY BUNDLES TO CART...")
+        print(f"🛒 ATTEMPTING TO ADD {TARGET_QUANTITY} TMNT COLLECTOR BOXES TO CART...")
         logging.info("=== PURCHASE ATTEMPT STARTED ===")
 
         # SAFETY CHECK: Verify we're on the correct product page
         current_url = driver.current_url
         logging.info(f"Current URL: {current_url}")
 
-        if 'B0FP6H8J6Q' not in current_url:
+        if 'B0FR6HHZKB' not in current_url:
             print(f"❌ SAFETY CHECK FAILED: Wrong product page!")
-            print(f"❌ Expected ASIN B0FP6H8J6Q, but on: {current_url}")
+            print(f"❌ Expected ASIN B0FR6HHZKB, but on: {current_url}")
             logging.error(f"SAFETY CHECK FAILED: Wrong URL - {current_url}")
             return False
 
-        # SAFETY CHECK: Verify product title contains Final Fantasy
+        # SAFETY CHECK: Verify product title contains TMNT or Teenage Mutant Ninja Turtles
         page_title = driver.title.lower()
         logging.info(f"Page title: {driver.title}")
 
-        if 'final fantasy' not in page_title:
+        if 'tmnt' not in page_title and 'teenage mutant ninja turtles' not in page_title:
             print(f"❌ SAFETY CHECK FAILED: Wrong product title!")
             print(f"❌ Page title: {driver.title}")
             logging.error(f"SAFETY CHECK FAILED: Wrong title - {driver.title}")
             return False
 
-        print(f"✅ Safety checks passed - confirmed on Final Fantasy product page")
-        print(f"✅ URL contains ASIN: B0FP6H8J6Q")
+        print(f"✅ Safety checks passed - confirmed on TMNT product page")
+        print(f"✅ URL contains ASIN: B0FR6HHZKB")
         print(f"✅ Title verified: {driver.title[:80]}...")
         logging.info("✅ All safety checks passed")
 
@@ -474,12 +475,14 @@ def auto_checkout(driver):
 
 def main():
     """Main monitoring function"""
-    print("🎮 Final Fantasy MTG Chrome Bot Starting...")
+    print("🐢 TMNT MTG Chrome Bot Starting...")
     print(f"🎯 Target: {PRODUCT_NAME}")
     print(f"🔗 URL: {PRODUCT_URL}")
     print(f"💰 Max Price: ${MAX_PRICE}")
     print(f"📦 Target Quantity: {TARGET_QUANTITY}")
     print(f"⏱️ Check Interval: {REFRESH_SECONDS}s")
+    print(f"🔥 HIGH PRIORITY: This product sold out in 5 minutes on preorder!")
+    print(f"💎 Resale Value: ~$1000 per box")
     print("=" * 60)
 
     # Check if auto mode
@@ -488,7 +491,7 @@ def main():
     if auto_mode:
         print("🤖 Auto-mode: Starting monitoring immediately...")
     else:
-        input("Press Enter to start Chrome Final Fantasy monitoring... ")
+        input("Press Enter to start Chrome TMNT monitoring... ")
 
     # Create Chrome driver
     driver = create_chrome_driver()
@@ -531,7 +534,7 @@ def main():
 
             # Add occasional longer pauses to mimic human behavior
             if random.random() < 0.1:  # 10% chance
-                extra_pause = random.uniform(30, 90)
+                extra_pause = random.uniform(30, 60)
                 print(f"🤫 Taking human-like break for {extra_pause:.1f} seconds...")
                 random_delay += extra_pause
 
@@ -576,7 +579,7 @@ def main():
 
             if result['action_required']:
                 print("🚨" * 20)
-                print("🚨 FINAL FANTASY BUNDLE AVAILABLE FROM AMAZON! 🚨")
+                print("🚨 TMNT COLLECTOR BOX AVAILABLE FROM AMAZON! 🚨")
                 print("🚨" * 20)
 
                 # Attempt purchase
@@ -603,7 +606,7 @@ def main():
             driver.quit()
         except:
             pass
-        print("✅ Final Fantasy Chrome bot stopped")
+        print("✅ TMNT Chrome bot stopped")
 
 if __name__ == "__main__":
     main()
