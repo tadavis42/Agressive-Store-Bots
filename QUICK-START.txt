@@ -1,0 +1,91 @@
+╔════════════════════════════════════════════════════════════════════╗
+║  TMNT COLLECTOR BOT - QUICK START FOR TESTING LATER               ║
+╚════════════════════════════════════════════════════════════════════╝
+
+📦 PRODUCT: TMNT Collector Booster Box
+💰 VALUE: $1000 resale ($456 MSRP) = $544+ profit per box
+🎯 PRIORITY: ULTRA-HIGH (sold out in 5 minutes)
+📅 RELEASE: March 6, 2026
+🔗 ASIN: B0FR6HHZKB
+
+═══════════════════════════════════════════════════════════════════
+
+🚀 QUICK TEST (3 commands):
+
+cd /home/tadavis/bots/CardTracker/Agressive-Store-Bots
+source venv/bin/activate
+python3 tmnt-collector-chrome-bot.py
+
+Then:
+1. Wait for Chrome to open
+2. Log into Amazon when prompted
+3. Press Enter to start monitoring
+4. Watch console for status updates
+
+═══════════════════════════════════════════════════════════════════
+
+📚 FULL DOCUMENTATION:
+
+• TESTING.md - Complete testing guide with:
+  - Prerequisites & dependency checks
+  - 3 testing methods (dry run, headless, background)
+  - Troubleshooting for common issues
+  - 3 ways to run continuously (screen/background/systemd)
+  - Performance monitoring tips
+  - Security notes
+
+• README.md - Overview and quick reference
+
+═══════════════════════════════════════════════════════════════════
+
+🔧 RUN CONTINUOUSLY (recommended):
+
+screen -S tmnt-bot
+cd /home/tadavis/bots/CardTracker/Agressive-Store-Bots
+source venv/bin/activate
+python3 tmnt-collector-chrome-bot.py --auto
+
+Detach: Ctrl+A then D
+Reattach: screen -r tmnt-bot
+
+═══════════════════════════════════════════════════════════════════
+
+📊 CHECK LOGS:
+
+tail -f tmnt_bot.log          # Live updates
+grep -i error tmnt_bot.log    # Check for errors
+tail -50 tmnt_bot.log          # Last 50 lines
+
+═══════════════════════════════════════════════════════════════════
+
+🐛 TROUBLESHOOTING:
+
+If Chrome fails to start:
+  sudo apt install -y chromium-browser chromium-chromedriver
+
+If permission denied:
+  rm -rf /tmp/tmnt_chrome_bot
+
+If bot hangs:
+  pkill -f tmnt-collector-chrome-bot.py
+
+═══════════════════════════════════════════════════════════════════
+
+🎯 WHAT TO EXPECT:
+
+✓ Bot checks every 5-13 seconds
+✓ Shows status: "🔴 Currently unavailable" 
+✓ When available: "🟢 AMAZON DIRECT - AVAILABLE TO PURCHASE!"
+✓ Automatically adds to cart
+✓ You complete checkout manually
+
+═══════════════════════════════════════════════════════════════════
+
+📁 FILES:
+• tmnt-collector-chrome-bot.py - The bot
+• TESTING.md - Full testing documentation  
+• README.md - Overview
+
+🌐 GitHub: https://github.com/tadavis42/Agressive-Store-Bots
+
+═══════════════════════════════════════════════════════════════════
