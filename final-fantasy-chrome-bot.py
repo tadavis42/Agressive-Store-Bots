@@ -9,6 +9,7 @@ import time
 import sys
 import os
 import random
+import logging
 from datetime import datetime, timedelta
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -16,6 +17,16 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import WebDriverException, NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+
+# Setup logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('finalfantasy_bot.log'),
+        logging.StreamHandler()
+    ]
+)
 
 # === CONFIGURATION ===
 PRODUCT_NAME = "Final Fantasy Chocobo Bundle"
@@ -58,9 +69,8 @@ def create_chrome_driver():
     options.add_argument('--disable-features=VizDisplayCompositor')
     options.add_argument('--ssl-version-fallback-min=tls1.2')
 
-    # Use dedicated profile for Final Fantasy bot with better anti-detection
-    profile_dir = f'C:\\temp\\finalfantasy_chrome_bot_{random.randint(1000,9999)}'
-    options.add_argument(f'--user-data-dir={profile_dir}')
+    # Use dedicated profile for Final Fantasy bot
+    options.add_argument('--user-data-dir=C:\\temp\\finalfantasy_chrome_bot')
     options.add_argument('--profile-directory=Default')
 
     # Enhanced anti-detection for faster monitoring
@@ -335,6 +345,32 @@ def attempt_purchase(driver):
     """Attempt to add Final Fantasy Bundle to cart with specified quantity"""
     try:
         print(f"🛒 ATTEMPTING TO ADD {TARGET_QUANTITY} FINAL FANTASY BUNDLES TO CART...")
+        logging.info("=== PURCHASE ATTEMPT STARTED ===")
+
+        # SAFETY CHECK: Verify we're on the correct product page
+        current_url = driver.current_url
+        logging.info(f"Current URL: {current_url}")
+
+        if 'B0FP6H8J6Q' not in current_url:
+            print(f"❌ SAFETY CHECK FAILED: Wrong product page!")
+            print(f"❌ Expected ASIN B0FP6H8J6Q, but on: {current_url}")
+            logging.error(f"SAFETY CHECK FAILED: Wrong URL - {current_url}")
+            return False
+
+        # SAFETY CHECK: Verify product title contains Final Fantasy
+        page_title = driver.title.lower()
+        logging.info(f"Page title: {driver.title}")
+
+        if 'final fantasy' not in page_title:
+            print(f"❌ SAFETY CHECK FAILED: Wrong product title!")
+            print(f"❌ Page title: {driver.title}")
+            logging.error(f"SAFETY CHECK FAILED: Wrong title - {driver.title}")
+            return False
+
+        print(f"✅ Safety checks passed - confirmed on Final Fantasy product page")
+        print(f"✅ URL contains ASIN: B0FP6H8J6Q")
+        print(f"✅ Title verified: {driver.title[:80]}...")
+        logging.info("✅ All safety checks passed")
 
         # Set quantity first
         try:
@@ -370,9 +406,13 @@ def attempt_purchase(driver):
                 button = driver.find_element(By.CSS_SELECTOR, selector)
                 if button.is_displayed() and button.is_enabled():
                     print(f"🎯 Found Add to Cart button: {selector}")
+                    logging.info(f"Clicking Add to Cart button: {selector}")
+                    logging.info(f"Pre-click URL: {driver.current_url}")
                     button.click()
                     print("✅ Clicked Add to Cart!")
+                    logging.info("Add to Cart button clicked")
                     time.sleep(3)  # Wait for response
+                    logging.info(f"Post-click URL: {driver.current_url}")
 
                     # Check if we're on cart page or if there are any popups
                     current_url = driver.current_url

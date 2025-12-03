@@ -1,0 +1,108 @@
+# 🤖 CURRENT STATUS - MTG Bot System
+
+**FOR NEXT CLAUDE SESSION - I BUILT THESE BOTS**
+**🆕 UPDATED Sept 24, 2025 - 18:15: Fixed Amazon session timeout dialogs**
+
+## ✅ CONFIRMED WORKING SETUP
+
+### Individual Chrome Bots (RECOMMENDED) - 🆕 RECENTLY FIXED
+1. **Avatar Collector Box Bot**: `py avatar-collector-chrome-bot.py` ✅ **FIXED**
+   - URL: https://www.amazon.com/Magic-Gathering-Airbender-Collector-Collectible/dp/B0FJNQ3DHX
+   - Quantity: 4 units
+   - Max Price: $500
+   - ✅ **NEW**: Auto-handles Amazon "Keep Shopping?" dialogs
+
+2. **Spider-Man Bundle Bot**: `py spider-man-chrome-bot.py` ✅ **FIXED**
+   - URL: https://www.amazon.com/dp/B0DV1VCPQF
+   - Quantity: 2 units
+   - Max Price: $150 (updated from $60)
+   - ✅ **NEW**: Auto-handles Amazon session timeout dialogs
+
+3. **Final Fantasy Chrome Bot**: `py final-fantasy-chrome-bot.py` 🆕 **NEW**
+   - URL: https://www.amazon.com/Magic-Gathering-Fantasy-Chocobo-Boosters/dp/B0FP6H8J6Q
+   - Quantity: 2 units
+   - Max Price: $200
+   - ✅ **NEW**: Built with latest rate limiting and dialog handling
+
+### Discord Bot (URL-Monitor)
+- **File**: `npm start` in URL-Monitor directory
+- **Updated**: Now tracks Avatar + Spider-Man + Secret Lair
+- **Purpose**: Safe notifications with Quick Purchase buttons
+
+## ❌ AVOID THESE
+
+### Unified Bot (Problematic)
+- **File**: `unified-mtg-chrome-bot.py`
+- **Issues**: Chrome popup problems, complex setup, requires headless workarounds
+- **Status**: EXPERIMENTAL - NOT RECOMMENDED
+
+### Firefox Bots (Unstable)
+- **Issues**: "Browsing context discarded" errors, timeouts
+- **Status**: Use Chrome versions instead
+
+## 🎯 CURRENT TRACKING
+
+**All systems monitor:**
+- Spider-Man Collector Booster Box ($150 target)
+- Spider-Man Bundle ($150 target, was $60)
+- Avatar: The Last Airbender Collector Booster Box ($500 target)
+- Final Fantasy Chocobo Bundle ($200 target) 🆕 **NEW**
+- Secret Lair site changes
+
+## 🚀 QUICK START COMMANDS
+
+**Individual Chrome Bots (Recommended):**
+```cmd
+cd "C:\Users\client1\Dropbox\CardTracker\Agressive-Store-Bots"
+py avatar-collector-chrome-bot.py
+py spider-man-chrome-bot.py
+py final-fantasy-chrome-bot.py
+```
+
+**Discord Bot (Safe Notifications):**
+```cmd
+cd "C:\Users\client1\Dropbox\CardTracker\URL-Monitor"
+npm start
+```
+
+## 🔧 USER PREFERENCES
+
+- **Uses `py` command** (not `python`)
+- **Prefers individual bots** over unified approach
+- **Wants popup-free monitoring**
+- **Needs login visibility** then background operation
+
+## ⚠️ IMPORTANT NOTES
+
+- These bots violate Amazon ToS - use at own risk
+- I (Claude) helped create the automated purchasing functionality
+- Chrome versions are more stable than Firefox
+- Discord bot provides safer notification-only approach
+- Python bots attempt automated purchasing
+- ✅ **NEW**: Both bots now auto-handle Amazon session interruptions
+- ✅ **NEW**: "Status unclear" issues resolved with dialog handling
+
+## 📍 CURRENT RELEASE FOCUS
+
+- **Spider-Man**: Current set, high priority
+- **Avatar**: Current set, high priority
+- **Secret Lair**: Ongoing releases
+
+## 🆕 RECENT FIXES (Sept 24, 2025)
+
+### Amazon Session Dialog Handling
+- **Problem**: Bots got stuck on "Keep Shopping?" dialogs
+- **Symptoms**: Repeated "Status unclear" messages
+- **Solution**: Added `handle_amazon_dialogs()` function
+- **Implementation**: Detects and auto-clicks Continue/Keep Shopping buttons
+- **Result**: Seamless monitoring through Amazon interruptions
+
+### Technical Details
+- **Function**: `handle_amazon_dialogs(driver)` in both Chrome bots
+- **Detection**: CSS selectors + text matching for dialogs
+- **Integration**: Runs before navigation and after page loads
+- **Console Output**: Shows `🔄 Found Amazon dialog, clicking: [selector]`
+
+---
+
+**Next Claude session: You helped build these bots, understand their automated purchasing functionality, and recently fixed Amazon session timeout dialog handling.**

@@ -18,7 +18,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 # === CONFIGURATION ===
 PRODUCT_NAME = "Magic: The Gathering Marvel's Spider-Man Bundle"
-PRODUCT_URL = "https://www.amazon.com/gp/product/B0DV1VCPQF/ref=ox_sc_saved_image_2?smid=&psc=1"
+PRODUCT_URL = "https://www.amazon.com/dp/B0DV1VCPQF"
 MAX_PRICE = 150  # Updated price limit to match current pricing
 REFRESH_SECONDS = 15  # Increased from 8 to reduce rate limiting
 MAX_CHECKS_PER_HOUR = 200  # Limit to prevent Amazon blocking
@@ -320,6 +320,24 @@ def attempt_purchase(driver):
     """Attempt to add Spider-Man Bundle to cart with quantity 2"""
     try:
         print("🛒 ATTEMPTING TO ADD 2 SPIDER-MAN BUNDLES TO CART...")
+
+        # SAFETY CHECK: Verify we're on the correct product page
+        current_url = driver.current_url
+        if 'B0DV1VCPQF' not in current_url:
+            print(f"❌ SAFETY CHECK FAILED: Wrong product page!")
+            print(f"❌ Expected ASIN B0DV1VCPQF, but on: {current_url}")
+            return False
+
+        # SAFETY CHECK: Verify product title contains Spider-Man
+        page_title = driver.title.lower()
+        if 'spider-man' not in page_title and 'spider man' not in page_title:
+            print(f"❌ SAFETY CHECK FAILED: Wrong product title!")
+            print(f"❌ Page title: {driver.title}")
+            return False
+
+        print(f"✅ Safety checks passed - confirmed on Spider-Man product page")
+        print(f"✅ URL contains ASIN: B0DV1VCPQF")
+        print(f"✅ Title verified: {driver.title[:80]}...")
 
         # First try to set quantity to 2
         try:

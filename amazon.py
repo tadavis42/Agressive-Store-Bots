@@ -5,7 +5,10 @@ import sys
 import time
 
 from sys import platform
-from backports import configparser
+try:
+    from backports import configparser
+except ImportError:
+    import configparser
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, WebDriverException
 from twilio.rest import Client
@@ -22,12 +25,12 @@ global profile_path
 username = ''
 password = ''
 
-# 2. Main Config
-url = 'https://www.amazon.com/PlayStation-5-Console/dp/B08FC5L3RG/ref=sr_1_6?dchild=1&keywords=ps5+console&qid=1623757970&sr=8-6'  # Enter your product page URL.
-max_price = 800  # Enter your Max Price your willing to pay and include taxes.
-webpage_refresh_timer = 4  # Default 4 seconds. If slow internet and the page isn't fully loading, increase this.
-test_mode = True  # Set False for testing. If set to True, it will place order and checkout product.
-headless_mode = False  # Set False for testing. If True, it will hide Firefox in background for faster checkout speed.
+# 2. Main Config - CONFIGURED FOR SPIDER-MAN COLLECTOR BOOSTER BOX
+url = 'https://www.amazon.com/dp/B0DV27CY5V'  # Spider-Man Collector Booster Box
+max_price = 200  # Max price willing to pay (currently shows ~$165 third-party)
+webpage_refresh_timer = 10  # 10 seconds refresh (safer for Amazon)
+test_mode = True  # Set False for live purchasing. If True, will only monitor without buying
+headless_mode = False  # Set False to see what's happening. If True, hides Firefox
 
 # 3. Twilio Information (Twilio is Optional - Skip this entire step if you don't want to use Twilio).
 toNumber = 'Your_Phone_Number'

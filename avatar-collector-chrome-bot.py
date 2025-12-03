@@ -9,6 +9,7 @@ import time
 import sys
 import os
 import random
+import logging
 from datetime import datetime, timedelta
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -16,6 +17,16 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import WebDriverException, NoSuchElementException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+
+# Setup logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('avatar_bot.log'),
+        logging.StreamHandler()
+    ]
+)
 
 # === CONFIGURATION ===
 PRODUCT_NAME = "Avatar: The Last Airbender Collector Booster Box"
@@ -258,6 +269,32 @@ def attempt_purchase(driver):
     """Attempt to add Avatar Collector Box to cart with quantity 4"""
     try:
         print("🛒 ATTEMPTING TO ADD 4 AVATAR COLLECTOR BOXES TO CART...")
+        logging.info("=== PURCHASE ATTEMPT STARTED ===")
+
+        # SAFETY CHECK: Verify we're on the correct product page
+        current_url = driver.current_url
+        logging.info(f"Current URL: {current_url}")
+
+        if 'B0FJNQ3DHX' not in current_url:
+            print(f"❌ SAFETY CHECK FAILED: Wrong product page!")
+            print(f"❌ Expected ASIN B0FJNQ3DHX, but on: {current_url}")
+            logging.error(f"SAFETY CHECK FAILED: Wrong URL - {current_url}")
+            return False
+
+        # SAFETY CHECK: Verify product title contains Avatar
+        page_title = driver.title.lower()
+        logging.info(f"Page title: {driver.title}")
+
+        if 'avatar' not in page_title and 'airbender' not in page_title:
+            print(f"❌ SAFETY CHECK FAILED: Wrong product title!")
+            print(f"❌ Page title: {driver.title}")
+            logging.error(f"SAFETY CHECK FAILED: Wrong title - {driver.title}")
+            return False
+
+        print(f"✅ Safety checks passed - confirmed on Avatar product page")
+        print(f"✅ URL contains ASIN: B0FJNQ3DHX")
+        print(f"✅ Title verified: {driver.title[:80]}...")
+        logging.info("✅ All safety checks passed")
 
         # First try to set quantity to 4
         try:
@@ -294,9 +331,13 @@ def attempt_purchase(driver):
                 button = driver.find_element(By.CSS_SELECTOR, selector)
                 if button.is_displayed() and button.is_enabled():
                     print(f"🎯 Found Add to Cart button: {selector}")
+                    logging.info(f"Clicking Add to Cart button: {selector}")
+                    logging.info(f"Pre-click URL: {driver.current_url}")
                     button.click()
                     print("✅ Clicked Add to Cart!")
+                    logging.info("Add to Cart button clicked")
                     time.sleep(4)  # Wait for response
+                    logging.info(f"Post-click URL: {driver.current_url}")
 
                     # Check if we're on cart page or if there are any popups
                     current_url = driver.current_url
