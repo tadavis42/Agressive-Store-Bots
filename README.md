@@ -1,4 +1,38 @@
-# How To Create An Automated Store Bot in Python
+# MTG Collector Box Auto-Purchase Bots
+
+**Last Updated:** 2025-12-03
+**Purpose:** Automated monitoring and purchasing of Magic: The Gathering Collector Booster Boxes from Amazon
+
+---
+
+## 🎯 QUICK START (2025 MTG Bots)
+
+### Current Bots (December 2025):
+1. **aetherdrift-collector-chrome-bot.py** - Preorder monitoring (Feb 2025 release)
+2. **foundations-collector-chrome-bot.py** - Core set with long print run
+3. **bloomburrow-collector-chrome-bot.py** - Popular summer 2024 set
+
+### Running a Bot:
+```cmd
+cd "C:\Users\client1\Dropbox\CardTracker\Agressive-Store-Bots"
+py aetherdrift-collector-chrome-bot.py
+```
+
+**📋 Product List:** See [PRODUCT-TRACKING-LIST.md](PRODUCT-TRACKING-LIST.md) for detailed product information
+**🆕 Setup Guide:** See [NEW-PRODUCTS-2025.md](NEW-PRODUCTS-2025.md) for quick setup instructions
+
+---
+
+## ⚠️ IMPORTANT WARNINGS
+
+- **Amazon ToS:** These bots violate Amazon Terms of Service - use at your own risk
+- **Automated Purchases:** Bots attempt to automatically add items to cart and checkout
+- **Manual Login Required:** You must log into Amazon when the bot starts
+- **Chrome Profiles:** Each bot uses a separate Chrome profile to avoid conflicts
+
+---
+
+## 📦 Original Generic Bot Instructions
 
 Hello GitHub, I would like to share my method of creating a aggressive Bestbuy Bot in Python. I will be using Beautifulsoup4, Selenium, and Twilio in this script. Please continue reading this for instructions on how to set up bot.
 
