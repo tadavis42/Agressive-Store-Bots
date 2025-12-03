@@ -26,20 +26,24 @@
 - Preorders sold out in under 5 minutes
 - This is the ONLY product worth monitoring right now
 
-### Running a Bot on tadbox (Linux):
+### Running the Bot
+
+**On tadbox (Linux):**
 ```bash
 cd /home/tadavis/bots/CardTracker/Agressive-Store-Bots
 source venv/bin/activate
 python3 tmnt-collector-chrome-bot.py
 ```
 
-### Running a Bot on Windows:
+**On Windows:**
 ```cmd
 cd "C:\Users\client1\Dropbox\CardTracker\Agressive-Store-Bots"
 py tmnt-collector-chrome-bot.py
 ```
 
-**All bots are now Linux/Windows compatible** - they use platform-independent paths and work on tadbox!
+**📚 Testing Guide:** See [TESTING.md](TESTING.md) for detailed setup, testing, and troubleshooting instructions.
+
+**Platform Support:** Bot uses platform-independent paths and works on both Linux and Windows.
 
 ---
 
